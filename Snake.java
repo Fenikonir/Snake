@@ -34,18 +34,26 @@ public class Snake {
 			kordSnakeF[1] = height / 2;
 	//        kordSnakeS[1] = height / 2;
 	//        kordSnakeS[0] = wight / 2 - 1;
-			
-			for (int i = 0; i < wight; i++) {
-				for (int j = 0; j < height; j++) {
-					if (i == kordSnakeF[0] && j == kordSnakeF[1]) {
-						System.out.print("* ");
-					} else {
-						System.out.print(poleIgrok[i][j] + " ");
+			while (true) {
+				long time = System.nanoTime();
+				if (time % 1000000000 == 0) {
+					if (vzor == 0) {
+						kordSnakeF[0] -= 1;
 					}
-
-				}
-				System.out.println();
+					for (int i = 0; i < wight; i++) {
+						for (int j = 0; j < height; j++) {
+							if (i == kordSnakeF[0] && j == kordSnakeF[1]) {
+								System.out.print("* ");
+							} else {
+								System.out.print(poleIgrok[i][j] + " ");
+								}
+						}
+								System.out.println();
+					}
+					System.out.println("___________________");
+				}			
 			}
+		
         } else {
 			System.out.println("Пока...");
 		}
