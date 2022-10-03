@@ -11,13 +11,13 @@ public class Snake {
 		//System.out.println(" 's' - Вниз ");
         System.out.println("Для того чтобы начать игру нажмите '55555'");
 		
-		int vhod = in.nextInt();
-		if (vhod == 55555) {
+		String vhod = in.nextLine();
+		if (vhod.equals("55555")) {
 			
 			// Задаем размеры игрового поля
 			int height = 10;
 			int wight = 10;
-			int snake = 4;
+			int snake = 6;
 			String s = "";
 			// Задаем массив с координатами тельца змейки
 			int[][] kordSnakeF = new int[snake][2];
