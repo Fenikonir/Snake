@@ -14,14 +14,15 @@ public class Snake {
 		int vhod = in.nextInt();
 		if (vhod == 55555) {
 			
-
+			// Задаем размеры игрового поля
 			int height = 10;
 			int wight = 10;
-			int inChar;
+			int snake = 4;
 			String s = "";
-
-			int[][] kordSnakeF = new int[3][2];
+			// Задаем массив с координатами тельца змейки
+			int[][] kordSnakeF = new int[snake][2];
 			int vzor = 0;
+			// Заполняем поле h на w
 			String[][] poleIgrok = new String[wight][height];
 			for (int i = 0; i < wight; i++) {
 				for (int j = 0; j < height; j++) {
@@ -29,11 +30,12 @@ public class Snake {
 					poleIgrok[i][j] = ".";
 				}
 			}
-			for (int i = 0; i < 3; i ++) {
+			// Заполняем координатами
+			for (int i = 0; i < snake; i ++) {
 				kordSnakeF[i][0] = wight / 2;
 				kordSnakeF[i][1] = height / 2 + i;
 			}
-			try {
+			//try {
 			while (true) {
 				//long time = System.currentTimeMillis();
 				//if (time % 1000 == 0) {
@@ -43,7 +45,7 @@ public class Snake {
 					
 					for (int i = 0; i < 100; i ++){
 						System.out.println();}
-					for (int i = 2; i > 0; i --) {
+					for (int i = snake - 1; i > 0; i --) {
 						kordSnakeF[i][0] = kordSnakeF[i-1][0];
 						kordSnakeF[i][1] = kordSnakeF[i-1][1];
 					}
@@ -58,31 +60,49 @@ public class Snake {
 					}
 					for (int i = 0; i < wight; i++) {
 						for (int j = 0; j < height; j++) {
-							boolean flag = false;
-							for (int e = 0; e < 3; e ++) {
-								if (i == kordSnakeF[e][0] && j == kordSnakeF[e][1]) {
-									flag = true;
+							int flag = 5;
+							for (int e = 1; e < snake; e ++) {
+								if (i == kordSnakeF[0][0] && j == kordSnakeF[0][1]) {
+									if (vzor == 0) {
+										flag = 0;										 
+									} else if (vzor == 2) { 
+										flag = 2;										
+									} else if (vzor == 1) {										
+										flag = 1;
+									} else if (vzor == 3) {
+										flag = 3;										
+								}
+								}else if (i == kordSnakeF[e][0] && j == kordSnakeF[e][1]) {
+									flag = 4;
 								}
 							}
-							if (flag) {
+							if (flag == 4) {
 								System.out.print("* ");
-							} else {
+							}else if (flag == 0) {
+								System.out.print("ᐃ ");
+							}else if (flag == 1) {
+								System.out.print("ᐅ "); 
+							}else if (flag == 2) {
+								System.out.print("ᐁ ");
+							}else if (flag == 3) {
+								System.out.print("ᐊ ");
+							} else if (flag ==5) {
 								System.out.print(poleIgrok[i][j] + " ");
 								}
 						}
 								System.out.println();
 					}
 					System.out.println("___________________");
-					inChar = System.in.read();
-					while (System.in.available() > 0) {
-                        s += (char) inChar;
-                        inChar = System.in.read();
-                        if (s.equals("a")) {
+					s = in.nextLine();
+					//while (System.in.available() > 0) {
+                    //   s += (char) inChar;
+                    //    inChar = System.in.read();
+                    if (s.equals("a")) {
 							vzor -= 1;
 							if (vzor == -1) {
-								vzor = 3;
+							vzor = 3;
 							}
-							
+					//		
 						} else if (s.equals("d")) {
 							vzor += 1;
 							if (vzor == 4) {
@@ -90,11 +110,12 @@ public class Snake {
 							}
 						}
                     }
-				}			
-			}
-		} catch (Exception e) {
-            System.out.println("Ошибка");
-        }
+				}
+				
+			
+		//} catch (Exception e) {
+          //  System.out.println("Ошибка");
+        //   }
 		
         } else {
 			System.out.println("Пока...");
