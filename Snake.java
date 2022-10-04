@@ -17,7 +17,7 @@ public class Snake {
 			// Задаем размеры игрового поля
 			int height = 10;
 			int wight = 10;
-			int snake = 6;
+			int snake = 3;
 			String s = "";
 			// Задаем массив с координатами тельца змейки
 			int[][] kordSnakeF = new int[snake][2];
@@ -58,11 +58,14 @@ public class Snake {
 					} else if (vzor == 3) {
 						kordSnakeF[0][1] -= 1;
 					}
+					System.out.println(" ____________________");
 					for (int i = 0; i < wight; i++) {
+						System.out.print("|");
 						for (int j = 0; j < height; j++) {
 							int flag = 5;
 							for (int e = 1; e < snake; e ++) {
 								if (i == kordSnakeF[0][0] && j == kordSnakeF[0][1]) {
+									poleIgrok[i][j] = "-1";
 									if (vzor == 0) {
 										flag = 0;										 
 									} else if (vzor == 2) { 
@@ -74,6 +77,7 @@ public class Snake {
 								}
 								}else if (i == kordSnakeF[e][0] && j == kordSnakeF[e][1]) {
 									flag = 4;
+									poleIgrok[i][j] = "-1";
 								}
 							}
 							if (flag == 4) {
@@ -89,10 +93,50 @@ public class Snake {
 							} else if (flag ==5) {
 								System.out.print(poleIgrok[i][j] + " ");
 								}
+							if (j == (height - 1)) {
+								System.out.print("|");
+							}	
 						}
 								System.out.println();
 					}
-					System.out.println("___________________");
+					System.out.println("|____________________|");
+					
+					//смерть
+					int max = wight;
+					int max1 = height;
+					int min = 0;
+					if ((kordSnakeF[0][0] > max) || (kordSnakeF[0][1] > max1)) {
+						System.out.println("      GAME OVER...");
+						break;
+					}
+					if ((kordSnakeF[0][0] < min) || (kordSnakeF[0][1] < min)) {
+						System.out.println("      GAME OVER...");
+						break;
+					}
+					
+					//очки
+					int k = 0;
+					int bonuses = 100;
+					final int randomplace = wight;
+					final int randomplace1 = height;
+					final int randomBonuses = 10;
+					Random r = new Random();
+					while (k < bonuses) {
+						int i = r.nextInt(randomplace);
+						int j = r.nextInt(randomplace1);
+						for (int w = 0; w < 10; w++) {
+							if (poleIgrok[i][j] != w)  {
+								poleIgrok[i][j] = r.nextInt(randomBonuses) ;
+								k += 1;
+							}
+						}
+						
+					}
+					
+					
+					
+					
+					//игрок
 					s = in.nextLine();
 					//while (System.in.available() > 0) {
                     //   s += (char) inChar;
