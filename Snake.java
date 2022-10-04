@@ -41,7 +41,7 @@ public class Snake {
 				//if (time % 1000 == 0) {
 				s = "";
 				long time = System.nanoTime();
-				if (time % 10000000 == 0) {
+				if (time % 1000000000 == 0) {
 					
 					for (int i = 0; i < 100; i ++){
 						System.out.println();}
@@ -93,29 +93,29 @@ public class Snake {
 								System.out.println();
 					}
 					System.out.println("___________________");
-					s = in.nextLine();
-					//while (System.in.available() > 0) {
-                    //   s += (char) inChar;
-                    //    inChar = System.in.read();
-                    if (s.equals("a")) {
-							vzor -= 1;
-							if (vzor == -1) {
-							vzor = 3;
-							}
-					//		
-						} else if (s.equals("d")) {
-							vzor += 1;
-							if (vzor == 4) {
-								vzor = 0;
+					try {
+						if (System.in.available() > 0) {
+							s = in.nextLine();
+							if (s.equals("a")) {
+								vzor -= 1;
+								if (vzor == -1) {
+									vzor = 3;
+								}		
+							} else if (s.equals("d")) {
+								vzor += 1;
+								if (vzor == 4) {
+									vzor = 0;
+								}
 							}
 						}
-                    }
+					} catch (Exception e) {
+						System.out.println("Ошибка");
+					}
+
+					}
 				}
 				
-			
-		//} catch (Exception e) {
-          //  System.out.println("Ошибка");
-        //   }
+		
 		
         } else {
 			System.out.println("Пока...");
