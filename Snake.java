@@ -23,55 +23,46 @@ public class Snake {
 			matur[8][2] = fullHor;
 			matur[8][3] = fullSten;
 			matur[8][4] = fullHor;
-			String[] matur1 = new String[5];
-			matur[1][0] = leftSten;
-			matur[1][1] = leftSten;
-			matur[1][2] = leftSten;
-			matur[1][3] = leftSten;
-			matur[1][4] = leftSten;
-			String[] matur2 = new String[5];
+			matur[1][0] = rightSten;
+			matur[1][1] = rightSten;
+			matur[1][2] = rightSten;
+			matur[1][3] = rightSten;
+			matur[1][4] = rightSten;
 			matur[2][0] = fullHor;
 			matur[2][1] = rightSten;
 			matur[2][2] = fullHor;
 			matur[2][3] = leftSten;
 			matur[2][4] = fullHor;
-			String[] matur3 = new String[5];
 			matur[3][0] = fullHor;
 			matur[3][1] = rightSten;
 			matur[3][2] = fullHor;
 			matur[3][3] = rightSten;
 			matur[3][4] = fullHor;
-			String[] matur4 = new String[5];
 			matur[4][0] = fullSten;
 			matur[4][1] = fullSten;
 			matur[4][2] = fullHor;
 			matur[4][3] = rightSten;
 			matur[4][4] = rightSten;
-			String[] matur5 = new String[5];
 			matur[5][0] = fullHor;
 			matur[5][1] = leftSten;
 			matur[5][2] = fullHor;
 			matur[5][3] = rightSten;
 			matur[5][4] = fullHor;
-			String[] matur6 = new String[5];
 			matur[6][0] = leftSten;
 			matur[6][1] = leftSten;
 			matur[6][2] = fullHor;
 			matur[6][3] = fullSten;
 			matur[6][4] = fullHor;
-			String[] matur7 = new String[5];
 			matur[7][0] = fullHor;
 			matur[7][1] = rightSten;
 			matur[7][2] = rightSten;
 			matur[7][3] = rightSten;
 			matur[7][4] = rightSten;
-			String[] matur9 = new String[5];
 			matur[9][0] = fullHor;
 			matur[9][1] = fullSten;
 			matur[9][2] = fullHor;
 			matur[9][3] = rightSten;
 			matur[9][4] = rightSten;
-			String[] matur0 = new String[5];
 			matur[0][0] = fullHor;
 			matur[0][1] = fullSten;
 			matur[0][2] = fullSten;
@@ -88,6 +79,10 @@ public class Snake {
 			String s = "";
 			// Задаем массив с координатами тельца змейки
 			int[][] kordSnakeF = new int[snake][2];
+			// Для будущего роста змейки
+			
+			// Змейка покушала
+			int snakeEaten = 0;
 			int vzor = 0;
 			// Заполняем поле h на w
 			String[][] poleIgrok = new String[wight][height];
@@ -114,9 +109,23 @@ public class Snake {
 					System.out.println("Для того чтобы управлять змейкой, используйте символы :");
 					System.out.println(" 'd' - Направо ");
 					System.out.println(" 'a' - Налево ");
-					for (int i = snake - 1; i > 0; i --) {
-						kordSnakeF[i][0] = kordSnakeF[i-1][0];
-						kordSnakeF[i][1] = kordSnakeF[i-1][1];
+					if (snakeEaten == 0) {
+						for (int i = snake - 1; i > 0; i --) {
+							kordSnakeF[i][0] = kordSnakeF[i-1][0];
+							kordSnakeF[i][1] = kordSnakeF[i-1][1];
+						}
+					} else if (snakeEaten == 1){
+						int[][] kordSnakeS = new int[snake][2];
+						for (int i = 0; i < snake; i ++) {
+							kordSnakeS[i][0] = kordSnakeF[i][0];
+							kordSnakeS[i][1] = kordSnakeF[i][1];
+						}
+						snake += 1;
+						for (int i = 1; i < snake; i ++) {
+							kordSnakeF[i][0] = kordSnakeS[i-1][0];
+							kordSnakeF[i][1] = kordSnakeS[i-1][1];
+						}
+						snakeEaten = 0;
 					}
 					if (vzor == 0) {
 						kordSnakeF[0][0] -= 1;
@@ -162,9 +171,30 @@ public class Snake {
 								}
 							if (j == (height - 1)) {
 								System.out.print("|");
+								// Выводим очки
+								if (i < 5) {
+									int vhodnoe = summ;
+									int c = 0;
+									while (vhodnoe > 0) {
+										c = c *10 + vhodnoe % 10;
+										vhodnoe /= 10;}
+										System.out.print("\t");
+										int beta = c;
+										if (c == 0) {
+											System.out.print(matur[0][i]);}    
+										else {
+											while (beta > 0) {
+												System.out.print(matur[beta % 10][i] + "  ");
+												beta /= 10;
+											}
+										}
+										if (summ%10 == 0) {
+											for (int emil = 1; emil * c < summ; emil *= 10){
+												System.out.print(matur[0][i] + "  ");}}							
+								}
 							}	
 						}
-								System.out.println();
+						System.out.println();
 					}
 					System.out.println("|____________________|");
 					
@@ -203,41 +233,21 @@ public class Snake {
 							if (i == kordSnakeF[0][0] && j == kordSnakeF[0][1] && poleIgrok[i][j] == "✰") {
 								poleIgrok[i][j] = ".";
 								summ ++;
-								a = summ;
-								for (int q = 0; q < 5; q ++) {
-									System.out.print("\t");
-									b = a;
-									while (b > 0) {
-									System.out.print(matur[b % 10][q] + "  ");
-									b /= 10;
-									}
-									System.out.println();
-								}
+								//snakeEaten = 1;
+								//a = summ;
+								//for (int q = 0; q < 5; q ++) {
+								//	System.out.print("\t");
+								//	b = a;
+								//	while (b > 0) {
+								//	System.out.print(matur[b % 10][q] + "  ");
+								//	b /= 10;
+								//	}
+								//	System.out.println();
+								// }
 							}
 					
 						}
 					}
-					
-					
-					
-					
-					//игрок
-					s = in.nextLine();
-					//while (System.in.available() > 0) {
-                    //   s += (char) inChar;
-                    //    inChar = System.in.read();
-                    if (s.equals("a")) {
-							vzor -= 1;
-							if (vzor == -1) {
-							vzor = 3;
-							}
-					//		
-						} else if (s.equals("d")) {
-							vzor += 1;
-							if (vzor == 4) {
-								vzor = 0;
-							}
-						}	
 					System.out.println("___________________");
 					try {
 						if (System.in.available() > 0) {
