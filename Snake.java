@@ -11,6 +11,7 @@ public class Snake {
 		//System.out.println(" 's' - Вниз ");
         System.out.println("Для того чтобы начать игру нажмите '55555'");
 		
+		
 		String vhod = in.nextLine();
 		if (vhod.equals("55555")) {
 			String fullHor = "11111";
@@ -72,7 +73,8 @@ public class Snake {
 			// Задаем размеры игрового поля
 			int height = 10;
 			int wight = 10;
-			int snake = 3;
+			int snake = height * wight;
+			int snakeLen = 2;
 			int summ = 0;
 			int a = 0;
 			int b = 0;
@@ -93,7 +95,7 @@ public class Snake {
 				}
 			}
 			// Заполняем координатами
-			for (int i = 0; i < snake; i ++) {
+			for (int i = 0; i < snakeLen; i ++) {
 				kordSnakeF[i][0] = wight / 2;
 				kordSnakeF[i][1] = height / 2 + i;
 			}
@@ -109,24 +111,16 @@ public class Snake {
 					System.out.println("Для того чтобы управлять змейкой, используйте символы :");
 					System.out.println(" 'd' - Направо ");
 					System.out.println(" 'a' - Налево ");
-					if (snakeEaten == 0) {
-						for (int i = snake - 1; i > 0; i --) {
-							kordSnakeF[i][0] = kordSnakeF[i-1][0];
-							kordSnakeF[i][1] = kordSnakeF[i-1][1];
-						}
-					} else if (snakeEaten == 1){
-						int[][] kordSnakeS = new int[snake][2];
-						for (int i = 0; i < snake; i ++) {
-							kordSnakeS[i][0] = kordSnakeF[i][0];
-							kordSnakeS[i][1] = kordSnakeF[i][1];
-						}
-						snake += 1;
-						for (int i = 1; i < snake; i ++) {
-							kordSnakeF[i][0] = kordSnakeS[i-1][0];
-							kordSnakeF[i][1] = kordSnakeS[i-1][1];
-						}
+					if (snakeEaten == 1){
+						snakeLen += 1;
 						snakeEaten = 0;
 					}
+					for (int i = snakeLen - 1; i > 0; i --) {
+						kordSnakeF[i][0] = kordSnakeF[i-1][0];
+						kordSnakeF[i][1] = kordSnakeF[i-1][1];
+					}
+						
+						
 					if (vzor == 0) {
 						kordSnakeF[0][0] -= 1;
 					} else if (vzor == 2) {
@@ -141,7 +135,7 @@ public class Snake {
 						System.out.print("|");
 						for (int j = 0; j < height; j++) {
 							int flag = 5;
-							for (int e = 1; e < snake; e ++) {
+							for (int e = 1; e < snakeLen; e ++) {
 								if (i == kordSnakeF[0][0] && j == kordSnakeF[0][1]) {
 									if (vzor == 0) {
 										flag = 0;										 
@@ -192,7 +186,12 @@ public class Snake {
 											for (int emil = 1; emil * c < summ; emil *= 10){
 												System.out.print(matur[0][i] + "  ");}}							
 								}
-							}	
+							}
+							if (i == kordSnakeF[0][0] && j == kordSnakeF[0][1] && poleIgrok[i][j] == "✰") {
+								poleIgrok[i][j] = ".";
+								summ ++;
+								snakeEaten = 1;
+							}
 						}
 						System.out.println();
 					}
@@ -226,26 +225,6 @@ public class Snake {
 						if (poleIgrok[i][j] != "✰")  {
 							poleIgrok[i][j] = "✰" ;
 							k += 1;
-						}
-					}
-					for (int i = 0; i < wight; i++) {
-						for (int j = 0; j < height; j++) {
-							if (i == kordSnakeF[0][0] && j == kordSnakeF[0][1] && poleIgrok[i][j] == "✰") {
-								poleIgrok[i][j] = ".";
-								summ ++;
-								//snakeEaten = 1;
-								//a = summ;
-								//for (int q = 0; q < 5; q ++) {
-								//	System.out.print("\t");
-								//	b = a;
-								//	while (b > 0) {
-								//	System.out.print(matur[b % 10][q] + "  ");
-								//	b /= 10;
-								//	}
-								//	System.out.println();
-								// }
-							}
-					
 						}
 					}
 					System.out.println("___________________");
