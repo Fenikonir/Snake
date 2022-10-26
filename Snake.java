@@ -174,7 +174,6 @@ public class Snake {
 							}
 							if (i == kordSnakeF[0][0] && j == kordSnakeF[0][1] && poleIgrok[i][j] == "✰") {
 								poleIgrok[i][j] = ".";
-								summ ++;
 								snakeEaten = 1;
 								kolApple -= 1;
 							}
@@ -202,7 +201,9 @@ public class Snake {
 						System.out.println("      GAME OVER...");
 						break;
 					}
-					
+					if (snakeEaten == 1) {
+						summ ++;
+					}
 					
 					//очки
 					if (kolApple == 0) {
